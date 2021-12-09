@@ -1,0 +1,18 @@
+Graph  : [(0, 1); (0, 2); (1, 2)]
+Topsort: [O; S (O); S (S (O)); _.179]
+Time   : 0.000381s
+
+Graph  : [(0, 1); (0, 2); (2, 1)]
+Topsort: [O; S (S (O)); S (O); _.224]
+Time   : 0.000860s
+
+Completely unfolded eval for graph with 3 edges
+Graph  : [(0, 1); (0, 2); (1, 2)]
+Topsort: [O; S (O); S (S (O)); _.104]
+Time   : 0.000115s
+
+Completely unfolded eval for graph with 3 edges
+Graph  : [(0, 1); (0, 2); (2, 1)]
+Topsort: [O; S (S (O)); S (O); _.97]
+Time   : 0.000112s
+
