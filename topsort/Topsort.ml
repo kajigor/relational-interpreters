@@ -18,7 +18,17 @@ let rec less x y r =
           fresh (x') (x === (s x')) (less x' y' r)
         ]));
       ((y === (o ())) &&& (r === (!! false)))
-    ]
+      ]
+
+let rec lessK gx gy kTrue kFalse =
+  match gy with
+    0 -> kFalse ()
+  | _ -> (match gx with
+           0 -> kTrue ()
+          | _ -> lessK (gx-1) (gy-1) kTrue kFalse
+         )
+   
+    
 let rec less_true x y =
     (fresh (y')
       (y === (s y'))
@@ -34,6 +44,17 @@ let max x y r =
         (t === (!! true)) &&& (r === y);
         (t === (!! false)) &&& (r === x)
       ])
+
+let maxK gx gy k =
+  lessK gx gy (k gy) (k gx)
+
+let numberOfnodesK g k =
+  let rec inner acc g =
+    match g with
+      [] -> k (acc)
+    | (x, y) :: tl -> maxK x y (fun xy -> maxK xy acc (fun accxy -> inner accxy tl))
+  in
+  inner 0 g 
 
 let numberOfnodes g r =
   let rec inner acc g r =
@@ -51,7 +72,11 @@ let rec lookup xs key value =
       fresh (k) (key === (s k)) (lookup tl k value)
     ])
 
-
+let rec lookupK (h :: tl) key k =
+  match key with
+    0    -> k (h)
+  | key' -> lookupK tl (key'-1) k
+  
 let rec lookup_lookup xs key1 value1 key2 value2 =
   fresh (h tl k1 k2)
     (xs === (h % tl))
